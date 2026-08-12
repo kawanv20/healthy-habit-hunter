@@ -68,7 +68,7 @@ export function EcoProvider({ children }: { children: ReactNode }) {
     ).length;
 
     const idx = LEVELS.reduce((acc, l, i) => (state.points >= l.min ? i : acc), 0);
-    const current = LEVELS[idx];
+    const current = LEVELS[idx]!;
     const next = LEVELS[idx + 1] ?? null;
     const progress = next
       ? Math.min(100, ((state.points - current.min) / (next.min - current.min)) * 100)

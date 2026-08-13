@@ -6,11 +6,22 @@
 
 export type Signal = "good" | "neutral" | "unknown";
 
+export type ProductDetails = {
+  /** tamanho/quantidade da embalagem (demonstração) */
+  size?: string;
+  ingredients?: string;
+  /** rótulos relevantes para a categoria, sem inventar números precisos */
+  labelNotes?: { label: string; value: string }[];
+  sourceNote?: string;
+};
+
 export type Product = {
   id: string;
   brand: string;
   name: string;
   emoji: string;
+  /** foto real da embalagem (quando disponível) */
+  image?: string;
   /** avaliação qualitativa de nutrição */
   nutrition: { level: Signal; label: string; detail: string };
   /** avaliação qualitativa ambiental */
@@ -25,9 +36,10 @@ export type Category = {
   id: string;
   label: string;
   emoji: string;
-  group: "Básicos" | "Bebidas" | "Laticínios" | "Snacks";
+  group: "Básicos" | "Bebidas" | "Laticínios" | "Snacks" | "Padaria" | "Proteínas" | "Casa";
   products: Product[];
 };
+
 
 const p = (
   id: string,

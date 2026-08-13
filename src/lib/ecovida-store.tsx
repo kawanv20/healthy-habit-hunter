@@ -7,11 +7,11 @@ export type ListItem = {
   /** exatamente o que o usuário digitou */
   raw: string;
   qty: number;
-  note?: string;
+  note?: string | undefined;
   /** categoria identificada pela análise */
-  categoryId?: string;
+  categoryId?: string | undefined;
   /** produto escolhido/recomendado */
-  productId?: string;
+  productId?: string | undefined;
   /** marcado no Modo Mercado */
   checked: boolean;
   /** usuário não encontrou no mercado */
@@ -23,7 +23,13 @@ export type Purchase = {
   date: string;
   points: number;
   breakdown: { label: string; points: number }[];
-  items: { name: string; categoryId?: string; productId?: string; aligned: boolean; bought: boolean }[];
+  items: {
+    name: string;
+    categoryId?: string | undefined;
+    productId?: string | undefined;
+    aligned: boolean;
+    bought: boolean;
+  }[];
 };
 
 type State = {

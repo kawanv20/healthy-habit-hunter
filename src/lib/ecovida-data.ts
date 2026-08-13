@@ -6,11 +6,22 @@
 
 export type Signal = "good" | "neutral" | "unknown";
 
+export type ProductDetails = {
+  /** tamanho/quantidade da embalagem (demonstração) */
+  size?: string;
+  ingredients?: string;
+  /** rótulos relevantes para a categoria, sem inventar números precisos */
+  labelNotes?: { label: string; value: string }[];
+  sourceNote?: string;
+};
+
 export type Product = {
   id: string;
   brand: string;
   name: string;
   emoji: string;
+  /** foto real da embalagem (quando disponível) */
+  image?: string;
   /** avaliação qualitativa de nutrição */
   nutrition: { level: Signal; label: string; detail: string };
   /** avaliação qualitativa ambiental */
@@ -25,9 +36,10 @@ export type Category = {
   id: string;
   label: string;
   emoji: string;
-  group: "Básicos" | "Bebidas" | "Laticínios" | "Snacks";
+  group: "Básicos" | "Bebidas" | "Laticínios" | "Snacks" | "Padaria" | "Proteínas" | "Casa";
   products: Product[];
 };
+
 
 const p = (
   id: string,
@@ -452,7 +464,131 @@ export const categories: Category[] = [
       ),
     ],
   },
+  {
+    id: "pao",
+    label: "Pão",
+    emoji: "🍞",
+    group: "Padaria",
+    products: [
+      p(
+        "pao-1",
+        "Forno da Vila",
+        "Pão integral fermentação natural",
+        "🍞",
+        { level: "good", label: "Boa opção nutricional", detail: "Farinha integral e lista curta de ingredientes." },
+        { level: "good", label: "Bom indicador ambiental", detail: "Embalagem de papel e produção local declarada." },
+        { level: "good", label: "Informação sobre transgênicos disponível" },
+        ["Integral", "Fermentação natural", "Papel"],
+        "Entre os pães comparados, tem a lista de ingredientes mais curta e farinha integral, com embalagem de papel.",
+      ),
+      p(
+        "pao-2",
+        "Grão Diário",
+        "Pão de forma tradicional",
+        "🍞",
+        { level: "neutral", label: "Opção intermediária", detail: "Farinha refinada com açúcar em pequena quantidade." },
+        { level: "neutral", label: "Indicador ambiental parcial", detail: "Embalagem plástica reciclável." },
+        { level: "unknown", label: "Sem informação sobre transgênicos" },
+        ["Clássico", "Fatias uniformes"],
+        "Alternativa tradicional, prática para o dia a dia.",
+      ),
+      p(
+        "pao-3",
+        "Sabor Doce",
+        "Pão doce industrializado",
+        "🍞",
+        { level: "neutral", label: "Mais açúcar por porção", detail: "Receita doce concentra mais açúcar." },
+        { level: "unknown", label: "Dados ambientais não disponíveis", detail: "Embalagem multicamada." },
+        { level: "unknown", label: "Sem informação sobre transgênicos" },
+        ["Sabor adocicado"],
+        "Opção de indulgência; concentra mais açúcar que os outros pães comparados.",
+      ),
+    ],
+  },
+  {
+    id: "carne",
+    label: "Carne",
+    emoji: "🥩",
+    group: "Proteínas",
+    products: [
+      p(
+        "carne-1",
+        "Campo Aberto",
+        "Corte bovino com origem rastreada",
+        "🥩",
+        { level: "good", label: "Proteína sem processamento", detail: "Corte in natura, sem aditivos." },
+        { level: "good", label: "Bom indicador ambiental", detail: "Marca publica rastreabilidade da origem." },
+        { level: "good", label: "Informação sobre transgênicos disponível" },
+        ["In natura", "Origem rastreada"],
+        "Entre as opções analisadas, é a única in natura com rastreabilidade publicada pela marca.",
+      ),
+      p(
+        "carne-2",
+        "Casa Grill",
+        "Frango em cortes congelados",
+        "🍗",
+        { level: "good", label: "Proteína magra", detail: "Corte simples, sem tempero adicionado." },
+        { level: "neutral", label: "Indicador ambiental parcial", detail: "Sem dados publicados de cadeia produtiva." },
+        { level: "unknown", label: "Sem informação sobre transgênicos" },
+        ["Sem tempero", "Prático"],
+        "Boa alternativa de proteína, com menos informação disponível sobre a cadeia.",
+      ),
+      p(
+        "carne-3",
+        "Rápido Sabor",
+        "Linguiça temperada",
+        "🌭",
+        { level: "neutral", label: "Carne processada", detail: "Processados costumam ter mais sódio e aditivos." },
+        { level: "unknown", label: "Dados ambientais não disponíveis", detail: "Sem informações públicas." },
+        { level: "unknown", label: "Sem informação sobre transgênicos" },
+        ["Pronta para grelhar"],
+        "Prática, porém é a opção mais processada entre as comparadas.",
+      ),
+    ],
+  },
+  {
+    id: "sabao",
+    label: "Sabão / limpeza",
+    emoji: "🧼",
+    group: "Casa",
+    products: [
+      p(
+        "sab-1",
+        "Casa Limpa",
+        "Sabão em pó concentrado refil",
+        "🧼",
+        { level: "unknown", label: "Não se aplica (produto de limpeza)", detail: "Indicadores nutricionais não se aplicam." },
+        { level: "good", label: "Bom indicador ambiental", detail: "Refil concentrado usa menos embalagem por lavagem." },
+        { level: "unknown", label: "Não se aplica" },
+        ["Refil", "Concentrado"],
+        "Formato refil concentrado reduz embalagem por uso em comparação às demais opções analisadas.",
+      ),
+      p(
+        "sab-2",
+        "Brilho Puro",
+        "Sabão em barra vegetal",
+        "🧼",
+        { level: "unknown", label: "Não se aplica (produto de limpeza)", detail: "Indicadores nutricionais não se aplicam." },
+        { level: "neutral", label: "Indicador ambiental parcial", detail: "Embalagem de papel; sem dados de formulação." },
+        { level: "unknown", label: "Não se aplica" },
+        ["Barra", "Embalagem de papel"],
+        "Alternativa simples com embalagem de papel.",
+      ),
+      p(
+        "sab-3",
+        "Espuma Max",
+        "Sabão líquido garrafa 3L",
+        "🧼",
+        { level: "unknown", label: "Não se aplica (produto de limpeza)", detail: "Indicadores nutricionais não se aplicam." },
+        { level: "unknown", label: "Dados ambientais não disponíveis", detail: "Sem informações publicadas." },
+        { level: "unknown", label: "Não se aplica" },
+        ["Líquido", "Rende muitas lavagens"],
+        "Formato prático, com mais plástico por lavagem entre as opções comparadas.",
+      ),
+    ],
+  },
 ];
+
 
 export const categoryById = (id: string) => categories.find((c) => c.id === id);
 
@@ -461,3 +597,82 @@ export const findProduct = (categoryId: string, productId: string) =>
 
 /** Ordem de recomendação: 1º é a "Escolha EcoVida" da demonstração. */
 export const recommendedFor = (categoryId: string) => categoryById(categoryId)?.products[0];
+
+/**
+ * Detalhes complementares de DEMONSTRAÇÃO.
+ * Só descrevem o que a própria demonstração define — nada de números medidos,
+ * preços, certificações reais ou métricas ambientais estimadas.
+ */
+export const productDetails: Record<string, ProductDetails> = {
+  "arroz-1": {
+    size: "Pacote 1 kg (demonstração)",
+    ingredients: "Arroz integral.",
+    labelNotes: [
+      { label: "Ingredientes", value: "1 ingrediente" },
+      { label: "Fibras", value: "Mais que a versão polida" },
+      { label: "Embalagem", value: "Monomaterial reciclável" },
+    ],
+  },
+  "mac-1": {
+    size: "Pacote 500 g (demonstração)",
+    ingredients: "Farinha de trigo integral, água.",
+    labelNotes: [
+      { label: "Ingredientes", value: "2 ingredientes" },
+      { label: "Embalagem", value: "Papel" },
+    ],
+  },
+  "molho-1": {
+    size: "Vidro 300 g (demonstração)",
+    ingredients: "Tomate, sal, cebola, manjericão.",
+    labelNotes: [
+      { label: "Açúcar adicionado", value: "Não consta na lista" },
+      { label: "Embalagem", value: "Vidro" },
+    ],
+  },
+  "bis-1": {
+    size: "Pacote 130 g (demonstração)",
+    ingredients: "Farinha de aveia, castanha, açúcar mascavo, óleo vegetal.",
+    labelNotes: [
+      { label: "Açúcar", value: "Menos por porção que as alternativas" },
+      { label: "Fibras", value: "Presentes" },
+    ],
+  },
+  "ref-1": {
+    size: "Garrafa retornável 1 L (demonstração)",
+    labelNotes: [
+      { label: "Açúcar", value: "Menos que as similares comparadas" },
+      { label: "Embalagem", value: "Vidro retornável" },
+    ],
+  },
+  "iog-1": {
+    size: "Pote 500 g (demonstração)",
+    ingredients: "Leite, fermento lácteo.",
+    labelNotes: [
+      { label: "Ingredientes", value: "2 ingredientes" },
+      { label: "Açúcar adicionado", value: "Não consta na lista" },
+    ],
+  },
+  "pao-1": {
+    size: "Pacote 500 g (demonstração)",
+    ingredients: "Farinha integral, água, sal, fermento natural.",
+    labelNotes: [
+      { label: "Ingredientes", value: "4 ingredientes" },
+      { label: "Embalagem", value: "Papel" },
+    ],
+  },
+  "carne-1": {
+    size: "Peça 1 kg (demonstração)",
+    labelNotes: [
+      { label: "Processamento", value: "In natura" },
+      { label: "Origem", value: "Rastreabilidade declarada" },
+    ],
+  },
+  "sab-1": {
+    size: "Refil 1,6 kg (demonstração)",
+    labelNotes: [{ label: "Embalagem", value: "Refil concentrado" }],
+  },
+};
+
+export const detailsFor = (productId: string): ProductDetails =>
+  productDetails[productId] ?? {};
+

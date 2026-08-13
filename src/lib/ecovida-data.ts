@@ -676,4 +676,3 @@ export const productDetails: Record<string, ProductDetails> = {
 export const detailsFor = (productId: string): ProductDetails =>
   productDetails[productId] ?? {};
 
-export const categoryById = (id: string) => categories.find((c) => c.id === id);

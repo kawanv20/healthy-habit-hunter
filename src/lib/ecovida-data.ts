@@ -597,3 +597,83 @@ export const findProduct = (categoryId: string, productId: string) =>
 
 /** Ordem de recomendação: 1º é a "Escolha EcoVida" da demonstração. */
 export const recommendedFor = (categoryId: string) => categoryById(categoryId)?.products[0];
+
+/**
+ * Detalhes complementares de DEMONSTRAÇÃO.
+ * Só descrevem o que a própria demonstração define — nada de números medidos,
+ * preços, certificações reais ou métricas ambientais estimadas.
+ */
+export const productDetails: Record<string, ProductDetails> = {
+  "arroz-1": {
+    size: "Pacote 1 kg (demonstração)",
+    ingredients: "Arroz integral.",
+    labelNotes: [
+      { label: "Ingredientes", value: "1 ingrediente" },
+      { label: "Fibras", value: "Mais que a versão polida" },
+      { label: "Embalagem", value: "Monomaterial reciclável" },
+    ],
+  },
+  "mac-1": {
+    size: "Pacote 500 g (demonstração)",
+    ingredients: "Farinha de trigo integral, água.",
+    labelNotes: [
+      { label: "Ingredientes", value: "2 ingredientes" },
+      { label: "Embalagem", value: "Papel" },
+    ],
+  },
+  "molho-1": {
+    size: "Vidro 300 g (demonstração)",
+    ingredients: "Tomate, sal, cebola, manjericão.",
+    labelNotes: [
+      { label: "Açúcar adicionado", value: "Não consta na lista" },
+      { label: "Embalagem", value: "Vidro" },
+    ],
+  },
+  "bis-1": {
+    size: "Pacote 130 g (demonstração)",
+    ingredients: "Farinha de aveia, castanha, açúcar mascavo, óleo vegetal.",
+    labelNotes: [
+      { label: "Açúcar", value: "Menos por porção que as alternativas" },
+      { label: "Fibras", value: "Presentes" },
+    ],
+  },
+  "ref-1": {
+    size: "Garrafa retornável 1 L (demonstração)",
+    labelNotes: [
+      { label: "Açúcar", value: "Menos que as similares comparadas" },
+      { label: "Embalagem", value: "Vidro retornável" },
+    ],
+  },
+  "iog-1": {
+    size: "Pote 500 g (demonstração)",
+    ingredients: "Leite, fermento lácteo.",
+    labelNotes: [
+      { label: "Ingredientes", value: "2 ingredientes" },
+      { label: "Açúcar adicionado", value: "Não consta na lista" },
+    ],
+  },
+  "pao-1": {
+    size: "Pacote 500 g (demonstração)",
+    ingredients: "Farinha integral, água, sal, fermento natural.",
+    labelNotes: [
+      { label: "Ingredientes", value: "4 ingredientes" },
+      { label: "Embalagem", value: "Papel" },
+    ],
+  },
+  "carne-1": {
+    size: "Peça 1 kg (demonstração)",
+    labelNotes: [
+      { label: "Processamento", value: "In natura" },
+      { label: "Origem", value: "Rastreabilidade declarada" },
+    ],
+  },
+  "sab-1": {
+    size: "Refil 1,6 kg (demonstração)",
+    labelNotes: [{ label: "Embalagem", value: "Refil concentrado" }],
+  },
+};
+
+export const detailsFor = (productId: string): ProductDetails =>
+  productDetails[productId] ?? {};
+
+export const categoryById = (id: string) => categories.find((c) => c.id === id);

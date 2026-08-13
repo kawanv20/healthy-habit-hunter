@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ListaRouteImport } from './routes/lista'
+import { Route as MinhaListaRouteImport } from './routes/minha-lista'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 import { Route as VerificarRouteImport } from './routes/verificar'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const ListaRoute = ListaRouteImport.update({
   id: '/lista',
   path: '/lista',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinhaListaRoute = MinhaListaRouteImport.update({
+  id: '/minha-lista',
+  path: '/minha-lista',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PerfilRoute = PerfilRouteImport.update({
@@ -44,6 +50,7 @@ const VerificarRoute = VerificarRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/lista': typeof ListaRoute
+  '/minha-lista': typeof MinhaListaRoute
   '/perfil': typeof PerfilRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/verificar': typeof VerificarRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/lista': typeof ListaRoute
+  '/minha-lista': typeof MinhaListaRoute
   '/perfil': typeof PerfilRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/verificar': typeof VerificarRoute
@@ -59,21 +67,42 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/lista': typeof ListaRoute
+  '/minha-lista': typeof MinhaListaRoute
   '/perfil': typeof PerfilRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/verificar': typeof VerificarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/lista' | '/perfil' | '/recomendacoes' | '/verificar'
+  fullPaths:
+    | '/'
+    | '/lista'
+    | '/minha-lista'
+    | '/perfil'
+    | '/recomendacoes'
+    | '/verificar'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/lista' | '/perfil' | '/recomendacoes' | '/verificar'
-  id: '__root__' | '/' | '/lista' | '/perfil' | '/recomendacoes' | '/verificar'
+  to:
+    | '/'
+    | '/lista'
+    | '/minha-lista'
+    | '/perfil'
+    | '/recomendacoes'
+    | '/verificar'
+  id:
+    | '__root__'
+    | '/'
+    | '/lista'
+    | '/minha-lista'
+    | '/perfil'
+    | '/recomendacoes'
+    | '/verificar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ListaRoute: typeof ListaRoute
+  MinhaListaRoute: typeof MinhaListaRoute
   PerfilRoute: typeof PerfilRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
   VerificarRoute: typeof VerificarRoute
@@ -93,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/lista'
       fullPath: '/lista'
       preLoaderRoute: typeof ListaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minha-lista': {
+      id: '/minha-lista'
+      path: '/minha-lista'
+      fullPath: '/minha-lista'
+      preLoaderRoute: typeof MinhaListaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/perfil': {
@@ -122,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ListaRoute: ListaRoute,
+  MinhaListaRoute: MinhaListaRoute,
   PerfilRoute: PerfilRoute,
   RecomendacoesRoute: RecomendacoesRoute,
   VerificarRoute: VerificarRoute,

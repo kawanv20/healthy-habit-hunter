@@ -255,11 +255,11 @@ export function ProductSheet({
 }: {
   product: Product | null;
   categoryId?: string | undefined;
-  why?: string;
+  why?: string | undefined;
   open: boolean;
   onOpenChange: (v: boolean) => void;
-  onSelect?: () => void;
-  selected?: boolean;
+  onSelect?: (() => void) | undefined;
+  selected?: boolean | undefined;
 }) {
   const [compareId, setCompareId] = useState<string | null>(null);
   const siblings = categoryId ? (categoryById(categoryId)?.products ?? []) : [];

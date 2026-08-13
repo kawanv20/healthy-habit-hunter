@@ -26,7 +26,7 @@ export const Route = createFileRoute("/minha-lista")({
 function MinhaListaPage() {
   const { items, prefs, choose, alignedCount, hydrated } = useEco();
   const navigate = useNavigate();
-  const [sheet, setSheet] = useState<{ product: Product; itemId: string; categoryId?: string } | null>(null);
+  const [sheet, setSheet] = useState<{ product: Product; itemId: string; categoryId?: string | undefined } | null>(null);
 
   if (hydrated && items.length === 0) {
     return (

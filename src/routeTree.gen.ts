@@ -14,6 +14,7 @@ import { Route as ListaRouteImport } from './routes/lista'
 import { Route as MercadoRouteImport } from './routes/mercado'
 import { Route as MinhaListaRouteImport } from './routes/minha-lista'
 import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as PontosRouteImport } from './routes/pontos'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 import { Route as VerificarRouteImport } from './routes/verificar'
 
@@ -42,6 +43,11 @@ const PerfilRoute = PerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PontosRoute = PontosRouteImport.update({
+  id: '/pontos',
+  path: '/pontos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecomendacoesRoute = RecomendacoesRouteImport.update({
   id: '/recomendacoes',
   path: '/recomendacoes',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/mercado': typeof MercadoRoute
   '/minha-lista': typeof MinhaListaRoute
   '/perfil': typeof PerfilRoute
+  '/pontos': typeof PontosRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/verificar': typeof VerificarRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/mercado': typeof MercadoRoute
   '/minha-lista': typeof MinhaListaRoute
   '/perfil': typeof PerfilRoute
+  '/pontos': typeof PontosRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/verificar': typeof VerificarRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/mercado': typeof MercadoRoute
   '/minha-lista': typeof MinhaListaRoute
   '/perfil': typeof PerfilRoute
+  '/pontos': typeof PontosRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/verificar': typeof VerificarRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/mercado'
     | '/minha-lista'
     | '/perfil'
+    | '/pontos'
     | '/recomendacoes'
     | '/verificar'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/mercado'
     | '/minha-lista'
     | '/perfil'
+    | '/pontos'
     | '/recomendacoes'
     | '/verificar'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/mercado'
     | '/minha-lista'
     | '/perfil'
+    | '/pontos'
     | '/recomendacoes'
     | '/verificar'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   MercadoRoute: typeof MercadoRoute
   MinhaListaRoute: typeof MinhaListaRoute
   PerfilRoute: typeof PerfilRoute
+  PontosRoute: typeof PontosRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
   VerificarRoute: typeof VerificarRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PerfilRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pontos': {
+      id: '/pontos'
+      path: '/pontos'
+      fullPath: '/pontos'
+      preLoaderRoute: typeof PontosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recomendacoes': {
       id: '/recomendacoes'
       path: '/recomendacoes'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   MercadoRoute: MercadoRoute,
   MinhaListaRoute: MinhaListaRoute,
   PerfilRoute: PerfilRoute,
+  PontosRoute: PontosRoute,
   RecomendacoesRoute: RecomendacoesRoute,
   VerificarRoute: VerificarRoute,
 }

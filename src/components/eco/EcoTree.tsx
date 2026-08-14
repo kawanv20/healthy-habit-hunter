@@ -10,6 +10,7 @@ export function EcoTree({
   className,
   glow = false,
   celebrate = false,
+  aspect = "4 / 3",
 }: {
   /** 0 = semente … 5 = ecossistema */
   stage: number;
@@ -18,6 +19,8 @@ export function EcoTree({
   glow?: boolean;
   /** animação de crescimento ao evoluir de estágio */
   celebrate?: boolean;
+  /** proporção da cena, ex. "16 / 9" para a versão compacta */
+  aspect?: string;
 }) {
   const s = Math.max(0, Math.min(5, stage));
   const [mounted, setMounted] = useState(false);
@@ -28,8 +31,9 @@ export function EcoTree({
 
   return (
     <div
+      style={{ aspectRatio: aspect }}
       className={cn(
-        "relative aspect-[4/3] w-full overflow-hidden rounded-4xl",
+        "relative w-full overflow-hidden rounded-4xl",
         "bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.97_0.03_200)_0%,oklch(0.96_0.04_150)_45%,oklch(0.93_0.06_140)_100%)]",
         "dark:bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.28_0.05_200)_0%,oklch(0.24_0.05_160)_50%,oklch(0.21_0.04_150)_100%)]",
         className,

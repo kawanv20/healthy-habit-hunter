@@ -88,30 +88,37 @@ function Home() {
         )}
       </section>
 
-      <section className="mt-5 grid grid-cols-2 gap-2.5 px-5 md:px-8">
-        <div className="rounded-3xl border border-border/70 bg-card p-4 shadow-soft">
-          <Leaf className="size-4 text-leaf" />
-          <p className="mt-2 font-display text-2xl font-semibold text-primary">{totalAligned}</p>
-          <p className="text-[11px] leading-snug text-muted-foreground">escolhas EcoVida confirmadas</p>
-          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted">
-            <div className="h-full rounded-full bg-eco-gradient transition-all duration-700" style={{ width: `${level.progress}%` }} />
+      <section className="mt-6 px-5 md:px-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-leaf">
+          Seu impacto está crescendo
+        </p>
+        <Link to="/pontos" className="mt-2.5 block">
+          <EcoTree stage={tree.index} aspect="16 / 9" className="shadow-soft" />
+          <div className="-mt-6 relative mx-auto w-[92%] rounded-3xl border border-border/60 bg-card/95 p-4 shadow-lift backdrop-blur">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-display text-lg font-semibold">
+                {tree.stage.emoji} {tree.stage.name}
+              </p>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-leaf">
+                Ver minha árvore <ArrowRight className="size-3.5" />
+              </span>
+            </div>
+            <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-muted">
+              <div
+                className="h-full rounded-full bg-eco-gradient transition-all duration-1000 ease-out"
+                style={{ width: `${tree.progress}%` }}
+              />
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">
+              {tree.next
+                ? `Faltam ${tree.remaining} escolha${tree.remaining === 1 ? "" : "s"} EcoVida para sua próxima evolução.`
+                : "Estágio máximo alcançado — sua árvore segue viva."}
+            </p>
           </div>
-          <p className="mt-1.5 text-[11px] text-muted-foreground">
-            Nível {level.name}
-            {level.next ? ` · próximo: ${level.next}` : ""}
-          </p>
-        </div>
-        <div className="rounded-3xl border border-border/70 bg-card p-4 shadow-soft">
-          <Flame className="size-4 text-berry" />
-          <p className="mt-2 font-display text-2xl font-semibold text-primary">{purchases.length}</p>
-          <p className="text-[11px] leading-snug text-muted-foreground">notas verificadas</p>
-          <Link to="/verificar" className="mt-3 inline-flex text-[11px] font-semibold text-leaf">
-            verificar uma compra →
-          </Link>
-        </div>
+        </Link>
       </section>
 
-      <section className="mt-3 px-5 md:px-8">
+      <section className="mt-4 px-5 md:px-8">
         <Link to="/pontos" className="flex items-center gap-3 rounded-3xl bg-surface-gradient p-4 ring-1 ring-border/60">
           <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-leaf/15 text-primary">
             <Target className="size-5" />

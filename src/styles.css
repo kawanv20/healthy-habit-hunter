@@ -129,3 +129,72 @@
 @utility text-balance-tight {
   text-wrap: balance;
 }
+
+/* ===== Árvore EcoVida — animações discretas ===== */
+@keyframes eco-sway {
+  0%, 100% { transform: rotate(-1.1deg); }
+  50% { transform: rotate(1.1deg); }
+}
+@keyframes eco-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.025); }
+}
+@keyframes eco-leaf {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(1.5px, -1.5px, 0); }
+}
+@keyframes eco-rise {
+  0% { opacity: 0; transform: translateY(6px) scale(0.7); }
+  25% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-42px) scale(1.1); }
+}
+@keyframes eco-pulse {
+  0%, 100% { opacity: 0.75; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+@keyframes eco-flit {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(22px, -12px); }
+  50% { transform: translate(48px, 6px); }
+  75% { transform: translate(18px, 16px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes eco-hop {
+  0%, 70%, 100% { transform: translateY(0); }
+  78% { transform: translateY(-4px); }
+  86% { transform: translateY(0); }
+}
+@keyframes eco-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes eco-grow {
+  0% { transform: scale(0.9); }
+  55% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes eco-glow {
+  0%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+@keyframes eco-points {
+  0% { opacity: 0; transform: translateY(14px) scale(0.85); }
+  60% { opacity: 1; transform: translateY(0) scale(1.06); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@utility animate-eco-sway { animation: eco-sway 6.5s ease-in-out infinite; transform-box: fill-box; }
+@utility animate-eco-breathe { animation: eco-breathe 7s ease-in-out infinite; transform-box: fill-box; }
+@utility animate-eco-leaf { animation: eco-leaf 4.5s ease-in-out infinite; transform-box: fill-box; }
+@utility animate-eco-rise { animation: eco-rise 7s ease-in-out infinite; transform-box: fill-box; }
+@utility animate-eco-pulse { animation: eco-pulse 3.6s ease-in-out infinite; transform-box: fill-box; }
+@utility animate-eco-flit { animation: eco-flit 14s ease-in-out infinite; transform-box: fill-box; }
+@utility animate-eco-hop { animation: eco-hop 6s ease-in-out infinite; transform-box: fill-box; }
+@utility animate-eco-in { animation: eco-in 0.9s ease-out both; transform-box: fill-box; }
+@utility animate-eco-grow { animation: eco-grow 1.4s cubic-bezier(0.22, 1, 0.36, 1); }
+@utility animate-eco-glow { animation: eco-glow 2.4s ease-in-out 1; }
+@utility animate-eco-points { animation: eco-points 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="animate-eco-"] { animation: none !important; }
+}

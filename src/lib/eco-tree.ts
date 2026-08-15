@@ -1,6 +1,7 @@
 /**
  * Árvore EcoVida — representação VISUAL do progresso do usuário dentro do app.
  * Importante: não representa compensação real de CO₂, água ou impacto ambiental.
+ * A árvore já começa formada e bonita; cada nível a torna mais exuberante.
  */
 
 export type TreeStage = {
@@ -13,12 +14,12 @@ export type TreeStage = {
 };
 
 export const TREE_STAGES: TreeStage[] = [
-  { id: "semente", name: "Semente", emoji: "🌰", min: 0, blurb: "Tudo começa com uma primeira escolha consciente." },
-  { id: "broto", name: "Broto", emoji: "🌱", min: 1, blurb: "Suas primeiras folhas apareceram." },
-  { id: "muda", name: "Muda", emoji: "🌿", min: 3, blurb: "O cenário começa a ganhar vida." },
-  { id: "jovem", name: "Árvore jovem", emoji: "🪴", min: 6, blurb: "A copa cresceu e o vento passa entre as folhas." },
-  { id: "viva", name: "Árvore viva", emoji: "🌳", min: 11, blurb: "Folhas em movimento, flores e visitantes discretos." },
-  { id: "ecossistema", name: "Ecossistema", emoji: "🌎", min: 18, blurb: "Um ambiente completo cresceu ao seu redor." },
+  { id: "jovem", name: "Árvore jovem", emoji: "🌿", min: 0, blurb: "Sua árvore já nasceu forte, com copa verde e raízes firmes." },
+  { id: "viva", name: "Árvore viva", emoji: "🌳", min: 1, blurb: "A copa encheu e o vento passa entre as folhas." },
+  { id: "florida", name: "Árvore florida", emoji: "🌸", min: 3, blurb: "Flores discretas abriram entre os galhos." },
+  { id: "frutifera", name: "Árvore frutífera", emoji: "🍃", min: 6, blurb: "Frutos e visitantes começam a aparecer." },
+  { id: "bosque", name: "Bosque", emoji: "🌲", min: 11, blurb: "Vegetação nova cresceu ao redor da sua árvore." },
+  { id: "ecossistema", name: "Ecossistema", emoji: "🌎", min: 18, blurb: "Um ambiente completo e vivo cresceu ao seu redor." },
 ];
 
 export type TreeState = {

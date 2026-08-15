@@ -4,6 +4,8 @@ import { useState } from "react";
 import { AppShell, DemoNote, PageHeader } from "@/components/eco/AppShell";
 import { PackShot } from "@/components/eco/ProductCard";
 import { findProduct } from "@/lib/ecovida-data";
+import { EcoTree } from "@/components/eco/EcoTree";
+import { treeStateFor } from "@/lib/eco-tree";
 import { itemProduct, useEco, type Purchase } from "@/lib/ecovida-store";
 import { cn } from "@/lib/utils";
 
@@ -23,13 +25,15 @@ export const Route = createFileRoute("/verificar")({
 });
 
 function VerificarPage() {
-  const { items, verifyPurchase, hydrated } = useEco();
+  const { items, verifyPurchase, hydrated, totalAligned } = useEco();
   const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState<Purchase | null>(null);
+  const [before, setBefore] = useState(0);
 
   const candidates = items.filter((i) => i.productId);
   const run = () => {
     setScanning(true);
+    setBefore(totalAligned);
     setTimeout(() => {
       setResult(verifyPurchase());
       setScanning(false);
@@ -38,6 +42,9 @@ function VerificarPage() {
 
   if (result) {
     const aligned = result.items.filter((i) => i.aligned).length;
+    const treeBefore = treeStateFor(before);
+    const treeAfter = treeStateFor(before + aligned);
+    const evolved = treeAfter.index > treeBefore.index;
     return (
       <AppShell>
         <div className="animate-in fade-in zoom-in-95 px-5 pt-8 duration-500 md:px-8">
@@ -46,11 +53,43 @@ function VerificarPage() {
             <span className="relative mx-auto grid size-16 place-items-center rounded-3xl bg-white/20 backdrop-blur">
               <Trophy className="size-7" />
             </span>
-            <p className="relative mt-3 text-sm font-semibold">Compra verificada 🎉</p>
-            <p className="relative mt-1 font-display text-4xl font-semibold">+{result.points} M Points</p>
-            <p className="relative mt-1 text-sm text-leaf-foreground/85">
-              {result.items.length} produtos · {aligned} escolha{aligned === 1 ? "" : "s"} EcoVida
+            <p className="relative mt-3 text-sm font-semibold">Compra verificada</p>
+            <p className="relative mt-1 animate-eco-points font-display text-4xl font-semibold">
+              +{result.points} M Points
             </p>
+            <p className="relative mt-1 text-sm text-leaf-foreground/85">
+              {aligned} escolha{aligned === 1 ? "" : "s"} EcoVida confirmada{aligned === 1 ? "" : "s"}.
+            </p>
+          </div>
+
+          {/* a árvore reage visualmente */}
+          <div className="mt-4">
+            <EcoTree stage={treeAfter.index} aspect="16 / 9" glow celebrate={evolved} className="shadow-lift" />
+            <div className="-mt-6 relative mx-auto w-[92%] rounded-3xl border border-border/60 bg-card/95 p-4 shadow-lift backdrop-blur">
+              <p className="text-sm font-semibold">
+                {evolved ? (
+                  <span className="animate-eco-points inline-block">Sua árvore evoluiu! {treeAfter.stage.emoji}</span>
+                ) : (
+                  <>
+                    {treeAfter.stage.emoji} {treeAfter.stage.name} — sua árvore ganhou novas folhas
+                  </>
+                )}
+              </p>
+              <div className="mt-2.5 h-2 overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-eco-gradient transition-all duration-[1400ms] ease-out"
+                  style={{ width: `${treeAfter.progress}%` }}
+                />
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {treeAfter.next
+                  ? `Faltam ${treeAfter.remaining} escolha${treeAfter.remaining === 1 ? "" : "s"} EcoVida para ${treeAfter.next.name}.`
+                  : "Estágio máximo — sua árvore continua viva."}
+              </p>
+              <Link to="/pontos" className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-leaf">
+                Ver minha árvore <ArrowRight className="size-3.5" />
+              </Link>
+            </div>
           </div>
 
           <ul className="mt-5 divide-y divide-border/70 overflow-hidden rounded-3xl border border-border/70 bg-card">
@@ -91,7 +130,7 @@ function VerificarPage() {
 
           <div className="mt-7 flex flex-wrap gap-3 pb-10">
             <Link to="/pontos" className="inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground">
-              Ver meus M Points <ArrowRight className="size-4" />
+              Ver meu impacto <ArrowRight className="size-4" />
             </Link>
             <Link to="/lista" className="inline-flex items-center gap-2 rounded-2xl bg-secondary px-5 py-3.5 text-sm font-semibold text-secondary-foreground">
               Nova lista

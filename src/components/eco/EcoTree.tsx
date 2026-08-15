@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Árvore EcoVida — cena SVG animada com 6 estágios.
- * Puramente visual: representa o progresso do usuário no app, nunca compensação ambiental real.
+ * Árvore EcoVida — cena SVG animada com 6 níveis de exuberância.
+ * A árvore já começa formada e bonita; os níveis adicionam copa, flores,
+ * frutos, vegetação e vida ao redor. Puramente visual: representa o
+ * progresso do usuário no app, nunca compensação ambiental real.
  */
 export function EcoTree({
   stage,
@@ -12,7 +14,7 @@ export function EcoTree({
   celebrate = false,
   aspect = "4 / 3",
 }: {
-  /** 0 = semente … 5 = ecossistema */
+  /** 0 = árvore jovem … 5 = ecossistema */
   stage: number;
   className?: string;
   /** brilho sutil ao ganhar pontos */
@@ -22,7 +24,7 @@ export function EcoTree({
   /** proporção da cena, ex. "16 / 9" para a versão compacta */
   aspect?: string;
 }) {
-  const s = Math.max(0, Math.min(5, stage));
+  const s = Math.max(0, Math.min(5, Math.round(stage)));
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     const t = requestAnimationFrame(() => setMounted(true));
@@ -34,61 +36,97 @@ export function EcoTree({
       style={{ aspectRatio: aspect }}
       className={cn(
         "relative w-full overflow-hidden rounded-4xl",
-        "bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.97_0.03_200)_0%,oklch(0.96_0.04_150)_45%,oklch(0.93_0.06_140)_100%)]",
-        "dark:bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.28_0.05_200)_0%,oklch(0.24_0.05_160)_50%,oklch(0.21_0.04_150)_100%)]",
+        "bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.98_0.03_210)_0%,oklch(0.96_0.05_160)_45%,oklch(0.93_0.07_142)_100%)]",
+        "dark:bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.29_0.05_230)_0%,oklch(0.24_0.05_165)_50%,oklch(0.2_0.04_150)_100%)]",
         className,
       )}
     >
       {/* luz ambiente */}
       <span
         className={cn(
-          "pointer-events-none absolute -right-10 -top-12 size-44 rounded-full bg-sun/25 blur-3xl transition-opacity duration-1000",
-          s >= 3 ? "opacity-100" : "opacity-50",
+          "pointer-events-none absolute -right-10 -top-12 size-44 rounded-full bg-sun/30 blur-3xl transition-opacity duration-1000",
+          s >= 2 ? "opacity-100" : "opacity-70",
         )}
       />
+      <span className="pointer-events-none absolute -bottom-16 -left-12 size-48 rounded-full bg-leaf/20 blur-3xl" />
       {glow && (
-        <span className="pointer-events-none absolute inset-0 animate-eco-glow bg-[radial-gradient(60%_50%_at_50%_70%,oklch(0.85_0.2_140/0.45),transparent_70%)]" />
+        <span className="pointer-events-none absolute inset-0 animate-eco-glow bg-[radial-gradient(60%_50%_at_50%_65%,oklch(0.85_0.2_140/0.5),transparent_70%)]" />
       )}
 
       <svg
         viewBox="0 0 240 180"
         className={cn(
           "relative size-full transition-[opacity,transform] duration-700 ease-out",
-          mounted ? "scale-100 opacity-100" : "scale-95 opacity-0",
+          mounted ? "scale-100 opacity-100" : "scale-[0.97] opacity-0",
           celebrate && "animate-eco-grow",
         )}
         aria-hidden="true"
       >
         <defs>
           <linearGradient id="eco-canopy" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="oklch(0.78 0.19 143)" />
-            <stop offset="100%" stopColor="oklch(0.5 0.13 155)" />
+            <stop offset="0%" stopColor="oklch(0.84 0.19 140)" />
+            <stop offset="55%" stopColor="oklch(0.7 0.18 145)" />
+            <stop offset="100%" stopColor="oklch(0.47 0.12 158)" />
+          </linearGradient>
+          <linearGradient id="eco-canopy-deep" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="oklch(0.62 0.15 152)" />
+            <stop offset="100%" stopColor="oklch(0.4 0.1 160)" />
           </linearGradient>
           <linearGradient id="eco-trunk" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="oklch(0.5 0.07 60)" />
-            <stop offset="60%" stopColor="oklch(0.4 0.06 55)" />
-            <stop offset="100%" stopColor="oklch(0.32 0.05 50)" />
+            <stop offset="0%" stopColor="oklch(0.54 0.07 62)" />
+            <stop offset="55%" stopColor="oklch(0.41 0.06 55)" />
+            <stop offset="100%" stopColor="oklch(0.3 0.05 48)" />
           </linearGradient>
           <linearGradient id="eco-soil" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="oklch(0.62 0.09 100)" />
-            <stop offset="100%" stopColor="oklch(0.42 0.07 80)" />
+            <stop offset="0%" stopColor="oklch(0.72 0.14 145)" />
+            <stop offset="45%" stopColor="oklch(0.58 0.1 130)" />
+            <stop offset="100%" stopColor="oklch(0.4 0.07 85)" />
           </linearGradient>
+          <radialGradient id="eco-sunlight" cx="0.8" cy="0.1" r="0.8">
+            <stop offset="0%" stopColor="oklch(0.95 0.14 95)" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="oklch(0.95 0.14 95)" stopOpacity="0" />
+          </radialGradient>
         </defs>
 
-        {/* colinas ao fundo (a partir de Muda) */}
-        {s >= 2 && (
-          <g className="animate-eco-in">
-            <path d="M-10 150 Q 45 118 105 150 Z" fill="oklch(0.8 0.07 155)" opacity="0.55" />
-            <path d="M120 150 Q 180 112 260 150 Z" fill="oklch(0.84 0.06 150)" opacity="0.5" />
+        <rect x="0" y="0" width="240" height="180" fill="url(#eco-sunlight)" />
+
+        {/* colinas ao fundo — sempre presentes */}
+        <g>
+          <path d="M-10 152 Q 50 112 112 152 Z" fill="oklch(0.82 0.08 158)" opacity="0.5" />
+          <path d="M110 152 Q 180 104 262 152 Z" fill="oklch(0.86 0.07 150)" opacity="0.45" />
+        </g>
+
+        {/* árvores distantes a partir de Bosque */}
+        {s >= 4 && (
+          <g className="animate-eco-in" opacity="0.55">
+            {[26, 46, 200, 220].map((x, i) => (
+              <g key={x}>
+                <path d={`M${x} 150 l 0 -14`} stroke="oklch(0.45 0.07 60)" strokeWidth="2.5" strokeLinecap="round" />
+                <ellipse cx={x} cy={140 - i} rx="11" ry="13" fill="url(#eco-canopy-deep)" />
+              </g>
+            ))}
           </g>
         )}
 
-        {/* terra */}
-        <path d="M20 152 Q 120 132 220 152 L 230 180 L 10 180 Z" fill="url(#eco-soil)" />
-        <ellipse cx="120" cy="150" rx="72" ry="10" fill="oklch(0.7 0.13 145)" opacity={s >= 2 ? 0.9 : 0.4} />
+        {/* terra e grama */}
+        <path d="M14 152 Q 120 130 226 152 L 238 180 L 2 180 Z" fill="url(#eco-soil)" />
+        <ellipse cx="120" cy="150" rx="78" ry="11" fill="oklch(0.74 0.15 145)" opacity="0.85" />
+        <g className="origin-bottom animate-eco-sway" style={{ animationDuration: "7.5s" }}>
+          {[58, 74, 90, 152, 168, 184].map((x, i) => (
+            <path
+              key={x}
+              d={`M${x} 154 q ${i % 2 ? 5 : -5} -9 ${i % 2 ? 2 : -2} -15`}
+              stroke="oklch(0.62 0.15 148)"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+              opacity="0.8"
+            />
+          ))}
+        </g>
 
-        {/* vegetação ao redor (Ecossistema) */}
-        {s >= 5 && (
+        {/* vegetação ao redor (Bosque / Ecossistema) */}
+        {s >= 4 && (
           <g className="animate-eco-in">
             {[36, 54, 186, 204].map((x, i) => (
               <g key={x} className="origin-bottom animate-eco-sway" style={{ animationDelay: `${i * 0.4}s` }}>
@@ -96,126 +134,136 @@ export function EcoTree({
                 <path d={`M${x} 152 q 7 -12 2 -20`} stroke="oklch(0.68 0.15 145)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
               </g>
             ))}
-            {/* pequenos animais discretos */}
-            <g className="animate-eco-hop">
-              <ellipse cx="176" cy="148" rx="6" ry="4" fill="oklch(0.55 0.08 60)" />
-              <circle cx="182" cy="145" r="3" fill="oklch(0.55 0.08 60)" />
-              <path d="M170 147 q -5 -3 -2 -7" stroke="oklch(0.55 0.08 60)" strokeWidth="2" fill="none" strokeLinecap="round" />
-            </g>
-          </g>
-        )}
-
-        {/* semente */}
-        {s === 0 && (
-          <g className="animate-eco-pulse">
-            <ellipse cx="120" cy="146" rx="7" ry="9" fill="oklch(0.52 0.09 70)" />
-            <path d="M120 140 q 4 3 2 8" stroke="oklch(0.72 0.12 100)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-          </g>
-        )}
-
-        {/* broto */}
-        {s === 1 && (
-          <g className="origin-bottom animate-eco-sway">
-            <path d="M120 148 L 120 118" stroke="oklch(0.6 0.15 145)" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M120 126 q -20 -6 -22 10 q 16 6 22 -10" fill="url(#eco-canopy)" />
-            <path d="M120 122 q 20 -8 23 8 q -17 7 -23 -8" fill="url(#eco-canopy)" />
-          </g>
-        )}
-
-        {/* muda / árvore */}
-        {s >= 2 && (
-          <g className="origin-bottom animate-eco-sway" style={{ animationDuration: s >= 4 ? "5s" : "6.5s" }}>
-            {/* tronco */}
-            <path
-              d={
-                s === 2
-                  ? "M116 150 q 2 -26 4 -40 l 4 0 q 2 16 4 40 z"
-                  : s === 3
-                    ? "M112 150 q 4 -38 6 -58 l 6 0 q 4 22 8 58 z"
-                    : "M108 150 q 6 -50 8 -76 l 8 0 q 4 28 12 76 z"
-              }
-              fill="url(#eco-trunk)"
-            />
-            {/* galhos */}
-            {s >= 3 && (
-              <g stroke="url(#eco-trunk)" strokeWidth={s >= 4 ? 4 : 3} fill="none" strokeLinecap="round">
-                <path d={s >= 4 ? "M118 96 q -18 -6 -26 -18" : "M118 108 q -14 -4 -20 -14"} />
-                <path d={s >= 4 ? "M120 88 q 20 -6 28 -20" : "M120 100 q 15 -5 21 -15"} />
+            {/* arbustos floridos */}
+            {[
+              [64, 148],
+              [176, 147],
+            ].map(([x, y], i) => (
+              <g key={i}>
+                <ellipse cx={x} cy={y} rx="11" ry="7" fill="url(#eco-canopy-deep)" opacity="0.9" />
+                <circle cx={x! - 4} cy={y! - 3} r="1.8" fill="oklch(0.86 0.14 30)" />
+                <circle cx={x! + 4} cy={y! - 4} r="1.8" fill="oklch(0.9 0.14 90)" />
               </g>
-            )}
+            ))}
+          </g>
+        )}
 
-            {/* copa */}
-            <g className="animate-eco-breathe origin-bottom">
-              {canopyBlobs(s).map((b, i) => (
-                <ellipse
+        {/* pequenos animais (Ecossistema) */}
+        {s >= 5 && (
+          <g className="animate-eco-hop">
+            <ellipse cx="196" cy="148" rx="6" ry="4" fill="oklch(0.55 0.08 60)" />
+            <circle cx="202" cy="145" r="3" fill="oklch(0.55 0.08 60)" />
+            <path d="M190 147 q -5 -3 -2 -7" stroke="oklch(0.55 0.08 60)" strokeWidth="2" fill="none" strokeLinecap="round" />
+          </g>
+        )}
+
+        {/* sombra da árvore */}
+        <ellipse cx="120" cy="152" rx={26 + s * 4} ry={5 + s} fill="oklch(0.3 0.05 150)" opacity="0.14" />
+
+        {/* árvore principal — já formada em todos os níveis */}
+        <g className="origin-bottom animate-eco-sway" style={{ animationDuration: s >= 3 ? "5.5s" : "6.5s" }}>
+          {/* raízes */}
+          <path d={`M${112 - s} 151 q -8 -2 -12 1`} stroke="url(#eco-trunk)" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <path d={`M${128 + s} 151 q 8 -2 12 1`} stroke="url(#eco-trunk)" strokeWidth="3" fill="none" strokeLinecap="round" />
+
+          {/* tronco */}
+          <path d={trunkPath(s)} fill="url(#eco-trunk)" />
+
+          {/* galhos */}
+          <g stroke="url(#eco-trunk)" strokeWidth={3 + s * 0.4} fill="none" strokeLinecap="round">
+            <path d={`M118 ${104 - s * 3} q -${16 + s * 2} -5 -${24 + s * 2} -${16 + s}`} />
+            <path d={`M121 ${96 - s * 3} q ${18 + s * 2} -5 ${26 + s * 2} -${18 + s}`} />
+            {s >= 2 && <path d={`M120 ${86 - s * 2} q -10 -12 -8 -22`} />}
+          </g>
+
+          {/* copa */}
+          <g className="animate-eco-breathe origin-bottom">
+            {canopyBlobs(s).map((b, i) => (
+              <ellipse
+                key={i}
+                cx={b.cx}
+                cy={b.cy}
+                rx={b.rx}
+                ry={b.ry}
+                fill={b.deep ? "url(#eco-canopy-deep)" : "url(#eco-canopy)"}
+                opacity={b.o}
+                className="animate-eco-leaf"
+                style={{ animationDelay: `${i * 0.3}s` }}
+              />
+            ))}
+          </g>
+
+          {/* flores */}
+          {s >= 2 && (
+            <g className="animate-eco-in">
+              {[
+                [100, 76],
+                [138, 66],
+                [122, 54],
+                [110, 90],
+                [146, 84],
+              ].map(([x, y], i) => (
+                <circle
                   key={i}
-                  cx={b.cx}
-                  cy={b.cy}
-                  rx={b.rx}
-                  ry={b.ry}
-                  fill="url(#eco-canopy)"
-                  opacity={b.o}
-                  className="animate-eco-leaf"
-                  style={{ animationDelay: `${i * 0.35}s` }}
+                  cx={x}
+                  cy={(y ?? 0) - s * 2}
+                  r="2.8"
+                  fill={i % 2 ? "oklch(0.92 0.1 340)" : "oklch(0.93 0.12 95)"}
+                  className="animate-eco-pulse"
+                  style={{ animationDelay: `${i * 0.6}s` }}
                 />
               ))}
             </g>
+          )}
 
-            {/* flores / frutos ocasionais */}
-            {s >= 4 && (
-              <g className="animate-eco-in">
-                {[
-                  [100, 74],
-                  [138, 66],
-                  [122, 52],
-                  [112, 88],
-                ].map(([x, y], i) => (
-                  <circle
-                    key={i}
-                    cx={x}
-                    cy={y}
-                    r="3"
-                    fill={i % 2 ? "oklch(0.83 0.15 80)" : "oklch(0.72 0.16 20)"}
-                    className="animate-eco-pulse"
-                    style={{ animationDelay: `${i * 0.7}s` }}
-                  />
-                ))}
-              </g>
-            )}
-          </g>
-        )}
+          {/* frutos */}
+          {s >= 3 && (
+            <g className="animate-eco-in">
+              {[
+                [106, 88],
+                [134, 80],
+                [124, 96],
+              ].map(([x, y], i) => (
+                <circle key={i} cx={x} cy={(y ?? 0) - s} r="3.2" fill="oklch(0.7 0.18 28)" opacity="0.95" />
+              ))}
+            </g>
+          )}
+        </g>
 
-        {/* borboletas / pássaros discretos */}
-        {s >= 4 && (
+        {/* borboletas */}
+        {s >= 1 && (
           <g className="animate-eco-flit">
-            <path d="M62 60 q 6 -8 10 0 q -6 6 -10 0" fill="oklch(0.62 0.16 20)" opacity="0.85" />
-            <path d="M72 60 q 6 -8 10 0 q -6 6 -10 0" fill="oklch(0.83 0.15 80)" opacity="0.8" />
+            <path d="M62 62 q 6 -8 10 0 q -6 6 -10 0" fill="oklch(0.68 0.16 25)" opacity="0.85" />
+            <path d="M72 62 q 6 -8 10 0 q -6 6 -10 0" fill="oklch(0.86 0.14 85)" opacity="0.8" />
           </g>
         )}
-        {s >= 5 && (
+        {/* pássaros */}
+        {s >= 3 && (
           <g className="animate-eco-flit" style={{ animationDelay: "2s", animationDuration: "16s" }}>
-            <path d="M170 44 q 7 -6 13 0" stroke="oklch(0.35 0.05 155)" strokeWidth="2" fill="none" strokeLinecap="round" />
-            <path d="M183 44 q 7 -6 13 0" stroke="oklch(0.35 0.05 155)" strokeWidth="2" fill="none" strokeLinecap="round" />
+            <path d="M170 40 q 7 -6 13 0" stroke="oklch(0.35 0.05 155)" strokeWidth="2" fill="none" strokeLinecap="round" />
+            <path d="M183 40 q 7 -6 13 0" stroke="oklch(0.35 0.05 155)" strokeWidth="2" fill="none" strokeLinecap="round" />
           </g>
         )}
 
         {/* partículas suaves */}
-        {s >= 3 &&
-          [
-            [70, 120],
-            [168, 110],
-            [92, 132],
-            [150, 136],
-            [186, 126],
-          ].map(([x, y], i) => (
+        {[
+          [70, 122],
+          [168, 112],
+          [92, 134],
+          [150, 138],
+          [186, 128],
+          [56, 108],
+        ]
+          .slice(0, 3 + s)
+          .map(([x, y], i) => (
             <circle
               key={i}
               cx={x}
               cy={y}
               r={i % 2 ? 1.6 : 1.1}
-              fill="oklch(0.86 0.16 130)"
+              fill="oklch(0.9 0.16 130)"
               className="animate-eco-rise"
-              style={{ animationDelay: `${i * 1.3}s` }}
+              style={{ animationDelay: `${i * 1.2}s` }}
             />
           ))}
       </svg>
@@ -223,36 +271,66 @@ export function EcoTree({
   );
 }
 
-function canopyBlobs(s: number) {
+function trunkPath(s: number) {
+  if (s <= 1) return "M112 151 q 4 -34 6 -54 l 6 0 q 4 20 8 54 z";
+  if (s <= 3) return "M109 151 q 6 -44 8 -66 l 7 0 q 4 24 11 66 z";
+  return "M106 151 q 7 -52 9 -78 l 9 0 q 4 28 13 78 z";
+}
+
+function canopyBlobs(s: number): { cx: number; cy: number; rx: number; ry: number; o: number; deep?: boolean }[] {
+  if (s === 0)
+    return [
+      { cx: 120, cy: 90, rx: 30, ry: 23, o: 1 },
+      { cx: 98, cy: 100, rx: 19, ry: 15, o: 0.95, deep: true },
+      { cx: 143, cy: 98, rx: 20, ry: 16, o: 0.95 },
+      { cx: 120, cy: 74, rx: 19, ry: 15, o: 0.9 },
+    ];
+  if (s === 1)
+    return [
+      { cx: 120, cy: 82, rx: 34, ry: 26, o: 1 },
+      { cx: 94, cy: 94, rx: 21, ry: 17, o: 0.95, deep: true },
+      { cx: 148, cy: 92, rx: 22, ry: 18, o: 0.95 },
+      { cx: 120, cy: 62, rx: 22, ry: 17, o: 0.92 },
+      { cx: 102, cy: 72, rx: 15, ry: 12, o: 0.85 },
+    ];
   if (s === 2)
     return [
-      { cx: 120, cy: 104, rx: 20, ry: 16, o: 1 },
-      { cx: 106, cy: 112, rx: 13, ry: 10, o: 0.9 },
-      { cx: 134, cy: 112, rx: 13, ry: 10, o: 0.9 },
+      { cx: 120, cy: 76, rx: 38, ry: 28, o: 1 },
+      { cx: 90, cy: 90, rx: 23, ry: 18, o: 0.95, deep: true },
+      { cx: 152, cy: 88, rx: 24, ry: 19, o: 0.95 },
+      { cx: 120, cy: 54, rx: 25, ry: 19, o: 0.92 },
+      { cx: 99, cy: 64, rx: 17, ry: 14, o: 0.86 },
+      { cx: 143, cy: 62, rx: 17, ry: 14, o: 0.86 },
     ];
   if (s === 3)
     return [
-      { cx: 120, cy: 82, rx: 28, ry: 22, o: 1 },
-      { cx: 98, cy: 96, rx: 18, ry: 14, o: 0.92 },
-      { cx: 143, cy: 94, rx: 19, ry: 15, o: 0.92 },
-      { cx: 120, cy: 66, rx: 17, ry: 13, o: 0.85 },
+      { cx: 120, cy: 72, rx: 42, ry: 31, o: 1 },
+      { cx: 86, cy: 86, rx: 25, ry: 20, o: 0.95, deep: true },
+      { cx: 156, cy: 84, rx: 26, ry: 21, o: 0.95 },
+      { cx: 120, cy: 48, rx: 28, ry: 21, o: 0.92 },
+      { cx: 96, cy: 58, rx: 19, ry: 15, o: 0.86 },
+      { cx: 146, cy: 56, rx: 19, ry: 15, o: 0.86 },
+      { cx: 120, cy: 98, rx: 30, ry: 15, o: 0.8, deep: true },
     ];
   if (s === 4)
     return [
-      { cx: 120, cy: 72, rx: 36, ry: 27, o: 1 },
-      { cx: 90, cy: 88, rx: 22, ry: 17, o: 0.94 },
-      { cx: 152, cy: 86, rx: 23, ry: 18, o: 0.94 },
-      { cx: 120, cy: 50, rx: 24, ry: 18, o: 0.9 },
-      { cx: 100, cy: 60, rx: 16, ry: 13, o: 0.82 },
-      { cx: 142, cy: 58, rx: 16, ry: 13, o: 0.82 },
+      { cx: 120, cy: 68, rx: 46, ry: 33, o: 1 },
+      { cx: 82, cy: 84, rx: 27, ry: 21, o: 0.95, deep: true },
+      { cx: 160, cy: 82, rx: 28, ry: 22, o: 0.95 },
+      { cx: 120, cy: 42, rx: 31, ry: 23, o: 0.93 },
+      { cx: 92, cy: 54, rx: 21, ry: 17, o: 0.87 },
+      { cx: 150, cy: 52, rx: 21, ry: 17, o: 0.87 },
+      { cx: 120, cy: 100, rx: 33, ry: 16, o: 0.82, deep: true },
     ];
   return [
-    { cx: 120, cy: 68, rx: 44, ry: 32, o: 1 },
-    { cx: 82, cy: 84, rx: 26, ry: 20, o: 0.95 },
-    { cx: 160, cy: 82, rx: 27, ry: 21, o: 0.95 },
-    { cx: 120, cy: 40, rx: 30, ry: 22, o: 0.92 },
-    { cx: 94, cy: 52, rx: 20, ry: 16, o: 0.86 },
-    { cx: 148, cy: 50, rx: 20, ry: 16, o: 0.86 },
-    { cx: 120, cy: 96, rx: 30, ry: 16, o: 0.8 },
+    { cx: 120, cy: 64, rx: 50, ry: 36, o: 1 },
+    { cx: 76, cy: 82, rx: 29, ry: 23, o: 0.96, deep: true },
+    { cx: 166, cy: 80, rx: 30, ry: 24, o: 0.96 },
+    { cx: 120, cy: 36, rx: 34, ry: 25, o: 0.94 },
+    { cx: 88, cy: 48, rx: 23, ry: 18, o: 0.88 },
+    { cx: 154, cy: 46, rx: 23, ry: 18, o: 0.88 },
+    { cx: 120, cy: 102, rx: 36, ry: 17, o: 0.84, deep: true },
+    { cx: 104, cy: 24, rx: 16, ry: 12, o: 0.8 },
+    { cx: 138, cy: 26, rx: 16, ry: 12, o: 0.8 },
   ];
 }

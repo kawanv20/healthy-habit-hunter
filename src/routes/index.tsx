@@ -26,7 +26,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { points, items, analyzed, level, totalAligned, purchases, challengeProgress, addItem } = useEco();
+  const { points, items, analyzed, level, totalAligned, challengeProgress, addItem } = useEco();
+  const tree = treeStateFor(totalAligned);
+
 
   return (
     <AppShell>

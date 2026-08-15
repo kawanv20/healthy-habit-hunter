@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Flame, Leaf, Plus, ShoppingCart, Sparkles, Target } from "lucide-react";
+import { ArrowRight, Leaf, Plus, ShoppingCart, Sparkles, Target } from "lucide-react";
 import { AppShell } from "@/components/eco/AppShell";
+import { EcoTree } from "@/components/eco/EcoTree";
+import { treeStateFor } from "@/lib/eco-tree";
 import { quickSuggestions } from "@/lib/ecovida-ai";
 import { WEEKLY_CHALLENGE, useEco } from "@/lib/ecovida-store";
 

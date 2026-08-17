@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, ListChecks, ReceiptText, Trophy, Leaf, User } from "lucide-react";
+import { Home, ListChecks, ReceiptText, Trophy, Leaf, User, Gamepad2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEco } from "@/lib/ecovida-store";
 import { cn } from "@/lib/utils";
@@ -8,6 +8,7 @@ const nav = [
   { to: "/", label: "Início", icon: Home },
   { to: "/lista", label: "Lista", icon: ListChecks },
   { to: "/verificar", label: "Nota", icon: ReceiptText },
+  { to: "/jogos", label: "Jogos", icon: Gamepad2 },
   { to: "/pontos", label: "Impacto", icon: Trophy },
   { to: "/perfil", label: "Perfil", icon: User },
 ] as const;
@@ -64,12 +65,14 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </aside>
 
-        <main className="flex-1 pb-28 md:pb-10">{children}</main>
+        <main className="flex-1 pb-28 md:pb-10">
+          <div className="mx-auto w-full max-w-2xl md:max-w-3xl">{children}</div>
+        </main>
       </div>
 
       {/* Mobile bottom nav */}
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
-        <ul className="mx-auto grid max-w-md grid-cols-5">
+        <ul className="mx-auto grid max-w-md grid-cols-6">
           {nav.map(({ to, label, icon: Icon }) => {
             const active = isActive(to);
             return (
@@ -77,21 +80,21 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <Link
                   to={to}
                   className={cn(
-                    "relative flex flex-col items-center gap-1 py-2 text-[11px] font-medium transition-colors",
+                    "relative flex flex-col items-center gap-1 py-2 text-[10px] font-medium transition-colors",
                     active ? "text-primary" : "text-muted-foreground",
                   )}
                 >
                   <span
                     className={cn(
-                      "grid size-9 place-items-center rounded-2xl transition-all duration-300",
+                      "grid size-8.5 place-items-center rounded-2xl transition-all duration-300",
                       active ? "bg-eco-gradient text-leaf-foreground shadow-glow" : "",
                     )}
                   >
-                    <Icon className="size-5" />
+                    <Icon className="size-4.5" />
                   </span>
                   {label}
                   {to === "/lista" && items.length > 0 && (
-                    <span className="absolute right-3 top-0.5 grid size-4.5 place-items-center rounded-full bg-berry text-[10px] font-bold text-berry-foreground">
+                    <span className="absolute right-1.5 top-0.5 grid size-4.5 place-items-center rounded-full bg-berry text-[10px] font-bold text-berry-foreground">
                       {items.length}
                     </span>
                   )}
@@ -134,7 +137,7 @@ export function PageHeader({
 export function ActionBar({ children }: { children: ReactNode }) {
   return (
     <div className="fixed inset-x-0 bottom-[68px] z-40 px-4 pb-[env(safe-area-inset-bottom)] md:bottom-6 md:left-56">
-      <div className="mx-auto flex max-w-md items-center gap-3 rounded-3xl border border-border/70 bg-card/95 p-3 shadow-lift backdrop-blur md:max-w-xl">
+      <div className="mx-auto flex max-w-2xl items-center gap-3 rounded-3xl border border-border/70 bg-card/95 p-3 shadow-lift backdrop-blur md:max-w-xl">
         {children}
       </div>
     </div>

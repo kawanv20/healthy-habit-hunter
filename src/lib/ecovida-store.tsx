@@ -38,9 +38,27 @@ type State = {
   points: number;
   purchases: Purchase[];
   prefs: Prefs;
+  games: GameStats;
 };
 
-const EMPTY: State = { items: [], analyzed: false, points: 0, purchases: [], prefs: DEFAULT_PREFS };
+export type GameStats = {
+  /** melhor pontuação no jogo de separação */
+  sortBest: number;
+  /** melhor acerto no quiz (0–10) */
+  quizBest: number;
+  plays: number;
+};
+
+const EMPTY_GAMES: GameStats = { sortBest: 0, quizBest: 0, plays: 0 };
+
+const EMPTY: State = {
+  items: [],
+  analyzed: false,
+  points: 0,
+  purchases: [],
+  prefs: DEFAULT_PREFS,
+  games: EMPTY_GAMES,
+};
 const KEY = "ecovida-ai-state-v2";
 
 const uid = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
@@ -67,6 +85,8 @@ type Ctx = State & {
   markUnavailable: (itemId: string, value: boolean) => void;
   resetMarket: () => void;
   verifyPurchase: () => Purchase;
+  /** recompensa de jogo: soma M Points e guarda recorde */
+  finishGame: (game: "sort" | "quiz", score: number, points: number) => void;
   setPrefs: (patch: Partial<Prefs>) => void;
   /** derivados */
   recognized: ListItem[];
@@ -89,7 +109,12 @@ export function EcoProvider({ children }: { children: ReactNode }) {
       const raw = localStorage.getItem(KEY);
       if (raw) {
         const parsed = JSON.parse(raw) as Partial<State>;
-        setState({ ...EMPTY, ...parsed, prefs: { ...DEFAULT_PREFS, ...(parsed.prefs ?? {}) } });
+        setState({
+          ...EMPTY,
+          ...parsed,
+          prefs: { ...DEFAULT_PREFS, ...(parsed.prefs ?? {}) },
+          games: { ...EMPTY_GAMES, ...(parsed.games ?? {}) },
+        });
       }
     } catch {
       /* ignore */
@@ -211,6 +236,18 @@ export function EcoProvider({ children }: { children: ReactNode }) {
         setState((s) => ({
           ...s,
           items: s.items.map((i) => ({ ...i, checked: false, unavailable: false })),
+        })),
+
+      finishGame: (game, score, points) =>
+        setState((s) => ({
+          ...s,
+          points: s.points + points,
+          games: {
+            ...s.games,
+            plays: s.games.plays + 1,
+            sortBest: game === "sort" ? Math.max(s.games.sortBest, score) : s.games.sortBest,
+            quizBest: game === "quiz" ? Math.max(s.games.quizBest, score) : s.games.quizBest,
+          },
         })),
 
       setPrefs: (patch) =>

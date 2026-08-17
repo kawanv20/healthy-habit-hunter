@@ -137,7 +137,7 @@ export function PageHeader({
 export function ActionBar({ children }: { children: ReactNode }) {
   return (
     <div className="fixed inset-x-0 bottom-[68px] z-40 px-4 pb-[env(safe-area-inset-bottom)] md:bottom-6 md:left-56">
-      <div className="mx-auto flex max-w-2xl items-center gap-3 rounded-3xl border border-border/70 bg-card/95 p-3 shadow-lift backdrop-blur md:max-w-xl">
+      <div className="mx-auto flex max-w-2xl items-center gap-3 rounded-3xl border border-border/70 bg-card/95 p-3 shadow-lift backdrop-blur md:max-w-2xl">
         {children}
       </div>
     </div>

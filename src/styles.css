@@ -41,6 +41,13 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --color-bin-paper: var(--bin-paper);
+  --color-bin-plastic: var(--bin-plastic);
+  --color-bin-glass: var(--bin-glass);
+  --color-bin-metal: var(--bin-metal);
+  --color-bin-organic: var(--bin-organic);
+  --color-bin-reject: var(--bin-reject);
+
   --shadow-soft: 0 1px 2px oklch(0.28 0.06 155 / 0.06), 0 8px 24px -12px oklch(0.28 0.06 155 / 0.18);
   --shadow-lift: 0 2px 6px oklch(0.28 0.06 155 / 0.08), 0 24px 48px -24px oklch(0.28 0.06 155 / 0.3);
   --shadow-glow: 0 12px 40px -14px oklch(0.72 0.19 145 / 0.55);
@@ -73,6 +80,13 @@
   --border: oklch(0.9 0.02 140);
   --input: oklch(0.92 0.02 140);
   --ring: oklch(0.66 0.17 150);
+
+  --bin-paper: oklch(0.62 0.16 250);
+  --bin-plastic: oklch(0.68 0.16 20);
+  --bin-glass: oklch(0.7 0.15 150);
+  --bin-metal: oklch(0.8 0.14 85);
+  --bin-organic: oklch(0.52 0.08 60);
+  --bin-reject: oklch(0.62 0.02 260);
 
   --gradient-eco: linear-gradient(135deg, oklch(0.42 0.11 155), oklch(0.62 0.17 150) 60%, oklch(0.82 0.19 140));
   --gradient-surface: linear-gradient(180deg, oklch(0.99 0.012 130), oklch(0.96 0.02 135));
@@ -198,3 +212,22 @@
 @media (prefers-reduced-motion: reduce) {
   [class*="animate-eco-"] { animation: none !important; }
 }
+
+/* ===== Jogos EcoVida ===== */
+@keyframes eco-pop {
+  0% { opacity: 0; transform: translateY(10px) scale(0.94); }
+  60% { transform: translateY(0) scale(1.03); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes eco-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+@keyframes eco-ring {
+  0% { opacity: 0.55; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+@utility animate-eco-pop { animation: eco-pop 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-eco-shake { animation: eco-shake 0.3s ease-in-out; }
+@utility animate-eco-ring { animation: eco-ring 0.6s ease-out both; }

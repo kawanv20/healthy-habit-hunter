@@ -30,7 +30,7 @@ const achievements = [
 ];
 
 function ImpactoPage() {
-  const { points, purchases, totalAligned, challengeProgress } = useEco();
+  const { points, purchases, totalAligned, challengeProgress, games } = useEco();
   const tree = treeStateFor(totalAligned);
   const pct = (challengeProgress / WEEKLY_CHALLENGE.goal) * 100;
 
@@ -89,6 +89,30 @@ function ImpactoPage() {
           <p className="mt-2 text-xs text-muted-foreground">
             {challengeProgress}/{WEEKLY_CHALLENGE.goal} concluídas · +{WEEKLY_CHALLENGE.reward} M Points
           </p>
+        </section>
+
+        <section className="mt-7">
+          <h2 className="flex items-center gap-2 text-sm font-semibold">
+            <Sparkles className="size-4 text-leaf" /> Jogos de reciclagem
+          </h2>
+          <div className="mt-3 grid grid-cols-3 gap-2.5">
+            {[
+              { label: "Separação", value: `${games.sortBest}/10` },
+              { label: "Mito ou verdade", value: `${games.quizBest}/8` },
+              { label: "Rodadas", value: String(games.plays) },
+            ].map((c) => (
+              <div key={c.label} className="rounded-2xl bg-muted/50 px-3 py-3 text-center">
+                <p className="font-display text-lg font-semibold text-primary">{c.value}</p>
+                <p className="text-[11px] leading-tight text-muted-foreground">{c.label}</p>
+              </div>
+            ))}
+          </div>
+          <Link
+            to="/jogos"
+            className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-secondary px-4 py-3 text-sm font-semibold text-secondary-foreground"
+          >
+            Treinar a separação do lixo
+          </Link>
         </section>
 
         <h2 className="mt-8 text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">

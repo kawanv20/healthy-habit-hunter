@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JogosRouteImport } from './routes/jogos'
 import { Route as ListaRouteImport } from './routes/lista'
 import { Route as MercadoRouteImport } from './routes/mercado'
 import { Route as MinhaListaRouteImport } from './routes/minha-lista'
@@ -21,6 +22,11 @@ import { Route as VerificarRouteImport } from './routes/verificar'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JogosRoute = JogosRouteImport.update({
+  id: '/jogos',
+  path: '/jogos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListaRoute = ListaRouteImport.update({
@@ -61,6 +67,7 @@ const VerificarRoute = VerificarRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/jogos': typeof JogosRoute
   '/lista': typeof ListaRoute
   '/mercado': typeof MercadoRoute
   '/minha-lista': typeof MinhaListaRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/jogos': typeof JogosRoute
   '/lista': typeof ListaRoute
   '/mercado': typeof MercadoRoute
   '/minha-lista': typeof MinhaListaRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/jogos': typeof JogosRoute
   '/lista': typeof ListaRoute
   '/mercado': typeof MercadoRoute
   '/minha-lista': typeof MinhaListaRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/jogos'
     | '/lista'
     | '/mercado'
     | '/minha-lista'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/jogos'
     | '/lista'
     | '/mercado'
     | '/minha-lista'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/jogos'
     | '/lista'
     | '/mercado'
     | '/minha-lista'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  JogosRoute: typeof JogosRoute
   ListaRoute: typeof ListaRoute
   MercadoRoute: typeof MercadoRoute
   MinhaListaRoute: typeof MinhaListaRoute
@@ -141,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jogos': {
+      id: '/jogos'
+      path: '/jogos'
+      fullPath: '/jogos'
+      preLoaderRoute: typeof JogosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lista': {
@@ -197,6 +217,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  JogosRoute: JogosRoute,
   ListaRoute: ListaRoute,
   MercadoRoute: MercadoRoute,
   MinhaListaRoute: MinhaListaRoute,

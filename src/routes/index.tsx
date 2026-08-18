@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Leaf, Plus, ShoppingCart, Sparkles, Target } from "lucide-react";
+import { ArrowRight, Leaf, Plus, Recycle, ShoppingCart, Sparkles, Target } from "lucide-react";
 import { AppShell } from "@/components/eco/AppShell";
 import { EcoTree } from "@/components/eco/EcoTree";
 import { treeStateFor } from "@/lib/eco-tree";
@@ -131,6 +131,24 @@ function Home() {
             <span className="block text-sm font-semibold">Desafio da semana</span>
             <span className="block text-xs text-muted-foreground">
               {challengeProgress}/{WEEKLY_CHALLENGE.goal} escolhas EcoVida · +{WEEKLY_CHALLENGE.reward} M Points
+            </span>
+          </span>
+          <ArrowRight className="size-4 shrink-0 text-muted-foreground" />
+        </Link>
+      </section>
+
+      <section className="mt-3 px-5 md:px-8">
+        <Link
+          to="/jogos"
+          className="flex items-center gap-3 rounded-3xl border border-border/70 bg-card p-4 shadow-soft transition-transform active:scale-[0.99]"
+        >
+          <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-leaf/15 text-leaf">
+            <Recycle className="size-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-semibold">Jogos de reciclagem</span>
+            <span className="block text-xs text-muted-foreground">
+              Separe o reciclável, teste mitos e ganhe M Points
             </span>
           </span>
           <ArrowRight className="size-4 shrink-0 text-muted-foreground" />
